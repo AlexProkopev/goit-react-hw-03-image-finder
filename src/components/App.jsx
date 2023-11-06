@@ -16,6 +16,7 @@ export default class App extends Component {
     page: 1,
     isModalOpen: false,
     modalData: null,
+    total: null,
   };
 
   onSubmit = valueInput => {
@@ -35,8 +36,13 @@ export default class App extends Component {
       const { data } = await axios.get(
         `https://pixabay.com/api/?q=${value}&page=${1}&key=39354546-4613c0428bf062669fa06b3f7&image_type=photo&orientation=horizontal&per_page=12`
       );
+
+      if (data.total === 0) {
+        alert('Ничего не найдено');
+      }
       this.setState({
         image: [...data.hits],
+        total: data.total,
       });
     } catch (error) {
       this.setState({
@@ -61,7 +67,6 @@ export default class App extends Component {
 
       this.setState({
         image: [...this.state.image, ...data.hits],
-        
       });
     } catch (error) {
       this.setState({
@@ -110,17 +115,12 @@ export default class App extends Component {
   }
 
   chekForValue = () => {
-    const {image} = this.state;
-    return (
-      image !== null &&
-      image.length === 0 &&
-      image === null
-    );
+    const { image } = this.state;
+    return image !== null && image.length === 0 && image === null;
   };
 
   handleClickModal = webformatURL => {
-   
-    const {image} = this.state;
+    const { image } = this.state;
 
     if (image && image.length > 0) {
       const matchedImage = image.find(
@@ -153,7 +153,8 @@ export default class App extends Component {
   };
 
   render() {
-    const {isLoading,error,image,isModalOpen,modalData} = this.state;
+    const { isLoading, error, image, isModalOpen, modalData, total } =
+      this.state;
     return (
       <div>
         <Searchbar onSubmit={this.onSubmit} />
@@ -167,7 +168,7 @@ export default class App extends Component {
           handleClickModal={this.handleClickModal}
         />
 
-        {this.state.image && <Button hendleClickMore={this.hendleClickMore} />}
+        {total > 0 && <Button hendleClickMore={this.hendleClickMore} />}
         {isModalOpen && (
           <Modal
             modalData={modalData}

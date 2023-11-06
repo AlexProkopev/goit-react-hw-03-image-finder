@@ -8,6 +8,10 @@ export default class Searchbar extends Component {
     hendleSubmitForm =(e)=>{
       e.preventDefault()
         const value = e.currentTarget.elements.search.value
+        if (value === '') {
+          alert('Введите текст для поиска')
+          return
+        } 
         this.props.onSubmit(value)
         e.currentTarget.reset()
     }
