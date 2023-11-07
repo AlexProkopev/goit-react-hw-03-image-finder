@@ -39,6 +39,7 @@ export default class App extends Component {
 
       if (data.total === 0) {
         alert('Ничего не найдено');
+        return
       }
       this.setState({
         image: [...data.hits],
@@ -171,7 +172,7 @@ export default class App extends Component {
           imageData={image}
           handleClickModal={this.handleClickModal}
         />
-
+{image === null && <h2>Начните поиск</h2>}
         {image !== null && image.length < totalHits &&  <Button hendleClickMore={this.hendleClickMore} />}
         {isModalOpen && (
           <Modal
