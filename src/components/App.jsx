@@ -6,6 +6,7 @@ import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import Swal from 'sweetalert2';
 import Modal from './Modal/Modal';
+import css from './App.module.css';
 
 export default class App extends Component {
   state = {
@@ -172,7 +173,7 @@ export default class App extends Component {
           imageData={image}
           handleClickModal={this.handleClickModal}
         />
-{image === null && <h2>Начните поиск</h2>}
+{image === null && <h2 className={css.title}>Начните поиск</h2>}
         {image !== null && image.length < totalHits &&  <Button hendleClickMore={this.hendleClickMore} />}
         {isModalOpen && (
           <Modal
