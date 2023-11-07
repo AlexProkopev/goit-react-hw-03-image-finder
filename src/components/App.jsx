@@ -16,7 +16,7 @@ export default class App extends Component {
     page: 1,
     isModalOpen: false,
     modalData: null,
-    total: null,
+    totalHits: null,
   };
 
   onSubmit = valueInput => {
@@ -42,8 +42,10 @@ export default class App extends Component {
       }
       this.setState({
         image: [...data.hits],
-        total: data.total,
+        totalHits: data.totalHits,
       });
+
+      console.log("Cколько раз вылезло")
     } catch (error) {
       this.setState({
         error: error.message,
@@ -153,8 +155,10 @@ export default class App extends Component {
   };
 
   render() {
-    const { isLoading, error, image, isModalOpen, modalData, total } =
+    const { isLoading, error, image, isModalOpen, modalData, totalHits } =
       this.state;
+
+      
     return (
       <div>
         <Searchbar onSubmit={this.onSubmit} />
@@ -168,7 +172,7 @@ export default class App extends Component {
           handleClickModal={this.handleClickModal}
         />
 
-        {total > 0 && <Button hendleClickMore={this.hendleClickMore} />}
+        {image !== null && image.length < totalHits &&  <Button hendleClickMore={this.hendleClickMore} />}
         {isModalOpen && (
           <Modal
             modalData={modalData}
