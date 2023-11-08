@@ -47,7 +47,7 @@ export default class App extends Component {
         totalHits: data.totalHits,
       });
 
-      console.log("Cколько раз вылезло")
+      
     } catch (error) {
       this.setState({
         error: error.message,
@@ -116,6 +116,8 @@ export default class App extends Component {
     if (prevState.page !== this.state.page) {
       this.fetchImageMore();
     }
+
+    
   }
 
   chekForValue = () => {
